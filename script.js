@@ -143,4 +143,3 @@ function createHeart(x, y) {
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 1000);
 }
-
