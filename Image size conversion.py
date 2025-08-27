@@ -67,8 +67,8 @@ def resize_image(input_path, output_path, new_width, new_height, resample_method
 
 # 示例用法:
 if __name__ == "__main__":
-  input_image_path = "C:\\Users\\Administrator\\Downloads\\logo (2).png" # 替换为你的输入图片路径 (可以是 PNG, 包含透明度)
-  output_image_path = "C:\\Users\\Administrator\\Downloads\\logo12.png" # 替换为你的输出图片路径
+  input_image_path = "C:\\Users\\Administrator\\Downloads\\logo2.png" # 替换为你的输入图片路径 (可以是 PNG, 包含透明度)
+  output_image_path = "C:\\Users\\Administrator\\Downloads\\logo3.png" # 替换为你的输出图片路径
   new_width = 1200
   new_height = 1200
   resample_method = "lanczos"

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LynC视频解析</title>
+    <link rel="icon" href="icons/logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+
+        <p class="subtitle">请选择线路并输入视频地址</p>
+
+
+        <div class="form-section">
+            <div class="input-group">
+  <div class="custom-select">
+    <div class="select-selected">选择解析器</div>
+    <div class="select-items">
+      <div data-value="1">夜幕解析</div>
+      <div data-value="2">PlayerJy解析(支持选集)</div>
+      <div data-value="3">七哥解析</div>
+      <div data-value="4">大米云解析</div>
+      <div data-value="5">闲鱼云解析</div>
+      <div data-value="6">七七云解析</div>
+      <div data-value="7">虾米解析</div>
+    </div>
+  </div>
+</div>
+
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="videoUrl"
+                    placeholder="请输入视频地址 如：https://v.qq.com/x/cover/..."
+                >
+            </div>
+        </div>
+
+        <button onclick="handleRedirect()">🚀 立即解析</button>
+    </div>
+
+  <!-- 底部 -->
+  <footer>
+      <div class="footer-logo blend-logo">
+          <a href="https://www.example.com" target="_blank" rel="noopener noreferrer">
+              <img src="https://gh.catmak.name/https://github.com/yaojiwei520/yaojiwei520.github.io/blob/main/images/20250827140639_kvjt.png" alt="Yao_ji_wei">
+          </a>
+      </div>
+
+<p class="copyright"><b>© Yao 2025-Cone on. </b></p>
+</footer>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
