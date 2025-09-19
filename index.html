@@ -8,46 +8,52 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
 
-        <p class="subtitle">请选择线路并输入视频地址</p>
+    <div id="modal-overlay" onclick="closeModalIfOutside(event)">
+        <div class="container" id="videoParserModal">
+            
+            <button class="close-btn" onclick="closeModal()">×</button>
 
+            <p class="subtitle">请选择线路并输入视频地址</p>
 
-        <div class="form-section">
-            <div class="input-group">
-                <div class="custom-select">
-                    <div class="select-selected">选择解析器</div>
-                    <div class="select-items">
-                        <div data-value="1">夜幕解析</div>
-                        <div data-value="2">PlayerJy解析(支持选集)</div>
-                        <div data-value="3">七哥解析</div>
-                        <div data-value="4">大米云解析</div>
-                        <div data-value="5">闲鱼云解析</div>
-                        <div data-value="6">七七云解析</div>
-                        <div data-value="7">虾米解析</div>
+            <div class="form-section">
+                <div class="input-group">
+                    <div class="custom-select">
+                        <div class="select-selected">选择解析器</div>
+                        <div class="select-items">
+                            <div data-value="1">夜幕解析</div>
+                            <div data-value="2">PlayerJy解析(支持选集)</div>
+                            <div data-value="3">七哥解析</div>
+                            <div data-value="4">大米云解析</div>
+                            <div data-value="5">闲鱼云解析</div>
+                            <div data-value="6">七七云解析</div>
+                            <div data-value="7">虾米解析</div>
+                        </div>
                     </div>
+                </div>
+
+                <div class="input-group">
+                    <input
+                        type="text"
+                        id="videoUrl"
+                        placeholder="请输入视频地址 如：https://v.qq.com/x/cover/..."
+                    >
                 </div>
             </div>
 
-            <div class="input-group">
-                <input
-                    type="text"
-                    id="videoUrl"
-                    placeholder="请输入视频地址 如：https://v.qq.com/x/cover/..."
-                >
+            <div class="shortcut-links">
+                <a href="https://v.qq.com/" target="_blank" rel="noopener noreferrer" class="quick-link-btn">腾讯视频</a>
+                <a href="https://www.iqiyi.com/" target="_blank" rel="noopener noreferrer" class="quick-link-btn">爱奇艺</a>
             </div>
-        </div>
 
-        <div class="shortcut-links">
-            <a href="https://v.qq.com/" target="_blank" rel="noopener noreferrer" class="quick-link-btn">腾讯视频</a>
-            <a href="https://www.iqiyi.com/" target="_blank" rel="noopener noreferrer" class="quick-link-btn">爱奇艺</a>
+            <button onclick="handleRedirect()">🚀 立即解析</button>
         </div>
-        <button onclick="handleRedirect()">🚀 立即解析</button>
     </div>
+
 
     <footer>
         <div class="footer-logo blend-logo">
-            <a href="https://yaojiwei520.github.io/image-upload/" target="_blank" rel="noopener noreferrer">
+            <a href="#" onclick="event.preventDefault(); openModal();" rel="noopener noreferrer">
                 <img src="https://gh.catmak.name/https://github.com/yaojiwei520/yaojiwei520.github.io/blob/main/images/20250827140639_kvjt.png" alt="Yao_ji_wei">
             </a>
         </div>

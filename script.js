@@ -11,38 +11,62 @@ const ROUTES = {
 // 当前选中的解析器编号
 let selectedRoute = null
 
-function showError(msg, duration = 2000) {
-    let existing = document.querySelector('.error-msg');
+// =======================================================
+// 模态对话框控制逻辑
+// =======================================================
 
-    if (!existing) {
-        const btn = document.querySelector('button');
-        if (!btn || !btn.parentNode) return;
+const modalOverlay = document.getElementById('modal-overlay');
 
-        existing = document.createElement('div');
-        existing.className = 'error-msg';
-        btn.parentNode.insertBefore(existing, btn.nextSibling);
-    }
-
-    existing.textContent = msg;
-
-    // 触发显示
-    existing.classList.remove('hide');
-    existing.classList.add('show');
-
-    // 延迟隐藏
-    setTimeout(() => {
-        existing.classList.remove('show');
-        existing.classList.add('hide');
-
-        // 动画结束后移除元素
-        existing.addEventListener('transitionend', function handler() {
-            existing.remove();
-            existing.removeEventListener('transitionend', handler);
-        });
-    }, duration);
+/** 弹出模态对话框 */
+function openModal() {
+    modalOverlay.classList.add('visible');
+    document.body.style.overflow = 'hidden'; // 阻止页面滚动
 }
 
-// 验证 URL
+/** 关闭模态对话框 */
+function closeModal() {
+    modalOverlay.classList.remove('visible');
+    document.body.style.overflow = ''; // 恢复页面滚动
+}
+
+/** 点击对话框外部（背景）时关闭模态对话框 */
+function closeModalIfOutside(event) {
+    if (event.target === modalOverlay) {
+        closeModal();
+    }
+}
+
+// =======================================================
+// 解析逻辑
+// =======================================================
+
+function showError(msg, duration = 2000) {
+  let existing = document.querySelector('.error-msg');
+
+  if (!existing) {
+    const formSection = document.querySelector('.container'); 
+    if (!formSection) return;
+
+    existing = document.createElement('div');
+    existing.className = 'error-msg';
+    formSection.appendChild(existing); 
+  }
+
+  existing.textContent = msg;
+  existing.classList.remove('hide');
+  existing.classList.add('show');
+
+  setTimeout(() => {
+    existing.classList.remove('show');
+    existing.classList.add('hide');
+
+    existing.addEventListener('transitionend', function handler() {
+      existing.remove();
+      existing.removeEventListener('transitionend', handler);
+    });
+  }, duration);
+}
+
 function isValidUrl(url) {
   try {
     new URL(url)
@@ -52,7 +76,6 @@ function isValidUrl(url) {
   }
 }
 
-// 处理 URL
 function processUrl(url) {
   if (!url.startsWith('http')) {
     return `https://${url}`
@@ -60,7 +83,6 @@ function processUrl(url) {
   return url
 }
 
-// 处理解析
 function handleRedirect() {
   const videoUrl = document.getElementById('videoUrl').value.trim()
   const btn = document.querySelector('button')
@@ -85,6 +107,9 @@ function handleRedirect() {
     window.open(fullUrl, '_blank')
     btn.innerHTML = '🚀 立即解析'
     btn.disabled = false
+    
+    // 解析完成后关闭模态框
+    closeModal(); 
   }, 800)
 }
 
@@ -93,16 +118,19 @@ document.getElementById('videoUrl').addEventListener('keypress', (e) => {
   if (e.key === 'Enter') handleRedirect()
 })
 
+// =======================================================
 // 自定义下拉菜单交互
+// =======================================================
+
 const select = document.querySelector('.custom-select')
 const selected = select.querySelector('.select-selected')
 const items = select.querySelector('.select-items')
-const body = document.querySelector('body') //拿到body元素
+const body = document.querySelector('body') 
 
-/*  显示/隐藏选项，增加/移除模糊 */
+/*  显示/隐藏选项 */
 selected.addEventListener('click', () => {
-    items.classList.toggle('show'); // 显示/隐藏菜单
-    body.classList.toggle('blurred');  // 添加/移除模糊效果
+    items.classList.toggle('show'); 
+    // body.classList.toggle('blurred'); // 保持原逻辑，如果CSS中有用到
 });
 
 // 选项点击事件
@@ -110,24 +138,31 @@ items.querySelectorAll('div').forEach(option => {
     option.addEventListener('click', () => {
         selected.textContent = option.textContent;
         selectedRoute = option.dataset.value;
-        items.classList.remove('show');  // 点击选项后，确保菜单隐藏
-        body.classList.remove('blurred');   // 移除模糊效果
+        items.classList.remove('show');  
+        // body.classList.remove('blurred');   
     });
 });
 
 // 点击外部收起菜单
 document.addEventListener('click', e => {
-  if (!select.contains(e.target)) {
-    items.classList.remove('show'); //关闭菜单
-    body.classList.remove('blurred');  //点击容器外部也需要移除模糊
-  }
+    if (!select.contains(e.target)) {
+        items.classList.remove('show'); 
+        // body.classList.remove('blurred');  
+    }
 })
 
-// ------------------ 爱心点击效果 ------------------
+// =======================================================
+// 爱心点击效果
+// =======================================================
+
 const colors = ['#e25555', '#ff69b4', '#ff9933', '#66ccff', '#9933ff', '#ff3399'];
 
-// 点击时生成多个爱心
 document.addEventListener("click", function(e) {
+  // 避免点击模态框背景或表单时也生成爱心
+  if (e.target.closest('#modal-overlay')) {
+      return; 
+  }
+  
   for (let i = 0; i < 6; i++) {
     createHeart(e.clientX + Math.random() - 1, e.clientY + Math.random() - 1);
   }
