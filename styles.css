@@ -456,3 +456,57 @@ textarea {
     -webkit-appearance: none;
              appearance: none;
 }
+
+/* ===== 快捷入口容器布局 ===== */
+.shortcut-links {
+    display: flex;
+    justify-content: space-between; /* 按钮之间有间距 */
+    gap: 15px; /* 两个按钮之间的间距，与下方的 button margin-top 配合 */
+    width: 100%; /* 继承容器宽度 */
+    margin-top: 15px; /* 与上方的输入框保持一致的间距 */
+}
+
+/* ===== 快捷入口按钮 (quick-link-btn) 样式，与 button 保持一致 ===== */
+.quick-link-btn {
+    /* 布局 */
+    width: 50%; /* 两个按钮平分宽度 */
+    padding: 12px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* 移除链接下划线 */
+    box-sizing: border-box; /* 确保 padding 不影响宽度计算 */
+    
+    /* 复制 button 的液态玻璃样式 */
+    border-radius: 12px;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    will-change: transform, opacity;
+}
+
+/* 复制 button 的 hover/active 效果 */
+.quick-link-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.quick-link-btn:active {
+    transform: scale(0.97);
+}
+
+
+/* ===== 响应式适配 ===== */
+@media (max-width: 480px) {
+    .quick-link-btn {
+        padding: 14px 20px; /* 与响应式 button 保持一致 */
+        font-size: 16px; /* 与响应式 button 保持一致 */
+    }
+}
