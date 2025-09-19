@@ -12,8 +12,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    /* 核心调整：让 footer 沉底居中 */
-    justify-content: flex-end; 
+    justify-content: flex-end; /* 让 footer 沉底居中 */
     align-items: center; 
     padding: 10px;
     /* 背景图片样式 - 必须保留 */
@@ -30,31 +29,36 @@ body:not(:has(.custom-select:hover)) {
     backdrop-filter: blur(5px);
 }
 
-/* ===== 主容器（液态玻璃）: 模态框内容样式 ===== */
+/* ===== 主容器（液态玻璃）: 模态框内容样式 - 强化美观 ===== */
 .container {
-    background: rgba(255, 255, 255, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(18px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    /* 强化液态玻璃效果 */
+    background: rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(25px); /* 强化模糊效果 */
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); 
     color: #333;
-    border-radius: 20px;
-    padding: 25px;
+    border-radius: 24px; /* 略微加大圆角 */
+    padding: 30px; /* 增加内边距 */
     width: 80vw;
     max-width: 500px;
     min-width: 280px;
-    /* 关键调整：由 Modal 控制定位 */
+    
+    /* 模态框定位控制 */
     margin: 0; 
     flex-shrink: 0;
     opacity: 1;
     animation: none;
     will-change: transform, opacity;
     position: relative;
-    z-index: 101;
-
-    /* 弹出动画初始状态 */
-    transform: translateY(-50px); 
+    z-index: 101; 
+    transform: translateY(-50px);
     transition: transform 0.3s ease;
+}
+
+/* 模态框弹出时的动画 */
+#modal-overlay.visible .container {
+    transform: translateY(0);
 }
 
 /* ===== 模态覆盖层：全屏、居中、半透明背景 ===== */
@@ -84,8 +88,8 @@ body:not(:has(.custom-select:hover)) {
     position: absolute;
     top: 10px; 
     right: 10px; 
-    background: rgba(255, 255, 255, 0.15); 
-    backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(10px);
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -103,14 +107,14 @@ body:not(:has(.custom-select:hover)) {
 }
 
 .close-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.4);
     transform: scale(1.1);
 }
 
-/* ===== 表单区域 & 输入组件精修：加强液态玻璃和间距 ===== */
+/* ===== 表单区域 & 输入组件精修 ===== */
 .form-section {
     display: grid;
-    gap: 20px; /* 增加输入框和下拉框之间的垂直间距 */
+    gap: 20px; /* 增加垂直间距 */
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
@@ -127,11 +131,11 @@ select,
     -webkit-user-select: text;
     width: 100%;
     padding: 16px 24px;
-    border: 1px solid rgba(255, 255, 255, 0.4); /* 略微加重边框 */
+    border: 1px solid rgba(255, 255, 255, 0.6); 
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.2); /* 略微降低透明度，增加对比 */
-    backdrop-filter: blur(15px) saturate(180%); /* 强化模糊效果 */
-    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    background: rgba(255, 255, 255, 0.1); /* 更透明 */
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
     font-size: 16px;
     color: #333;
     outline: none;
@@ -141,45 +145,70 @@ select,
     user-select: text;
 }
 
-/* 下拉菜单选中项样式 */
-.select-selected {
-    /* 确保样式与 input[type="text"] 完全一致 */
-    background: rgba(255, 255, 255, 0.2); 
-    border: 1px solid rgba(255, 255, 255, 0.4);
+input[type="text"]:focus,
+.custom-select .select-selected:focus {
+    background: rgba(255, 255, 255, 0.3); /* 聚焦时更亮 */
+    border-color: rgba(255, 255, 255, 0.9);
 }
 
-/* 下拉选项容器 */
+/* 下拉菜单选项列表 */
 .select-items {
-    top: calc(100% + 8px); /* 增加与选中项的间距 */
-    background: rgba(215, 237, 253, 0.9); /* 选项列表背景 */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    /* ... 保持其他样式 ... */
+    top: calc(100% + 10px); /* 增加间距 */
+    background: rgba(255, 255, 255, 0.95); /* 略微不透明，确保清晰度 */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+    overflow: hidden; /* 确保圆角有效 */
 }
 
+.select-items > div {
+    padding: 14px 24px; 
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
 
-/* ===== 按钮 & 快捷入口样式：确保间距协调 ===== */
+.select-items > div:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* 悬停颜色 */
+}
+
+/* ===== 按钮 & 快捷入口样式：统一透明玻璃效果 ===== */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px; /* 统一垂直间距 */
+    font-size: 18px;
+    border-radius: 12px;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.15); /* 统一透明玻璃背景 */
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.3); /* 悬停时更亮 */
+}
+
 .shortcut-links {
     display: flex;
     justify-content: space-between;
-    gap: 20px; /* 增加两个快捷按钮之间的间距 */
+    gap: 20px; 
     width: 100%;
-    margin-top: 20px; /* 增加与上方输入框的间距 */
+    margin-top: 20px; /* 统一垂直间距 */
 }
 
 .quick-link-btn {
     width: 50%; 
     padding: 12px;
     font-size: 18px;
-    /* ... 保持液态玻璃和动画样式 ... */
-    background: rgba(255, 255, 255, 0.1);
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px; /* 增加与上方快捷入口按钮的间距 */
-    /* ... 保持液态玻璃和动画样式 ... */
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15); /* 确保与 button 样式一致 */
+    border-radius: 12px;
+    /* ... 保持其他样式 ... */
 }
 
 /* ===== 底部样式 & 图标：恢复 Logo 尺寸 ===== */
@@ -193,8 +222,17 @@ footer {
 
 .blend-logo img {
     /* 关键修复：确保尺寸被应用 */
-    width: 88px !important; /* 强制应用您的 Logo 宽度 */
+    width: 88px !important; 
     height: auto;
     /* ... 保持其他样式 ... */
 }
-/* ... 保持其他所有原有样式不变 ... */
+
+.blend-logo img:hover {
+    transform: translateY(-5px);
+    box-shadow: 2px 1px 8px 0px #6F8FAF;
+}
+
+.blend-logo img:active {
+    transform: translateY(13px);
+    transition: all 0.1s ease-in
+}
