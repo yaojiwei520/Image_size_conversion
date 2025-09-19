@@ -6,6 +6,30 @@
     <title>视频解析</title>
     <link rel="icon" href="https://gh.catmak.name/https://github.com/yaojiwei520/yaojiwei520.github.io/blob/main/images/20250827140639_kvjt.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 简单的样式示例，你需要根据你的styles.css进行调整 */
+        .shortcut-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* 按钮之间的间距 */
+            margin-bottom: 20px; /* 与下方解析按钮的间距 */
+        }
+        .button-link {
+            /* 模仿按钮的样式 */
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50; /* 绿色 */
+            color: white;
+            text-decoration: none; /* 去掉链接下划线 */
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .button-link:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -38,10 +62,13 @@
             </div>
         </div>
 
+        <div class="shortcut-links">
+            <a href="https://v.qq.com/" target="_blank" rel="noopener noreferrer" class="button-link">腾讯视频</a>
+            <a href="https://www.iqiyi.com/" target="_blank" rel="noopener noreferrer" class="button-link">爱奇艺</a>
+        </div>
         <button onclick="handleRedirect()">🚀 立即解析</button>
     </div>
 
-  <!-- 底部 -->
   <footer>
       <div class="footer-logo blend-logo">
           <a href="https://yaojiwei520.github.io/image-upload/" target="_blank" rel="noopener noreferrer">
