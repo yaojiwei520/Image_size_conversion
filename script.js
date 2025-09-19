@@ -130,7 +130,6 @@ const body = document.querySelector('body')
 /*  显示/隐藏选项 */
 selected.addEventListener('click', () => {
     items.classList.toggle('show'); 
-    // body.classList.toggle('blurred'); // 保持原逻辑，如果CSS中有用到
 });
 
 // 选项点击事件
@@ -139,7 +138,6 @@ items.querySelectorAll('div').forEach(option => {
         selected.textContent = option.textContent;
         selectedRoute = option.dataset.value;
         items.classList.remove('show');  
-        // body.classList.remove('blurred');   
     });
 });
 
@@ -147,7 +145,6 @@ items.querySelectorAll('div').forEach(option => {
 document.addEventListener('click', e => {
     if (!select.contains(e.target)) {
         items.classList.remove('show'); 
-        // body.classList.remove('blurred');  
     }
 })
 
