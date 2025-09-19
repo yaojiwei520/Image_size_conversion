@@ -1,76 +1,108 @@
-/* ===== 模态对话框样式新增/调整 ===== */
-
-/* 1. 调整 body 布局：让它只关注背景和 footer 的定位 */
-body {
-    justify-content: flex-end; /* 让 footer 沉底 */
-    align-items: center; /* 保持水平居中 */
-    min-height: 100vh;
+/* ===== 全局重置 ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    user-select: none;
 }
 
-/* 2. 模态覆盖层 - 用于全屏背景和居中对话框 */
+/* ===== 主体布局：确保背景图片和 Logo 布局恢复 ===== */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* 核心调整：让 footer 沉底居中 */
+    justify-content: flex-end; 
+    align-items: center; 
+    padding: 10px;
+    /* 背景图片样式 - 必须保留 */
+    background-image: url("https://gh.catmak.name/https://github.com/yaojiwei520/yaojiwei520.github.io/blob/main/images/20250827142226_pl3z.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: backdrop-filter 0.3s ease;
+    backdrop-filter: blur(0);
+}
+
+/* 原始模糊效果逻辑 */
+body:not(:has(.custom-select:hover)) {
+    transition: backdrop-filter 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+/* ===== 主容器（液态玻璃）: 现在是模态框内容 ===== */
+.container {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    color: #333;
+    border-radius: 20px;
+    padding: 25px;
+    width: 80vw;
+    max-width: 500px;
+    min-width: 280px;
+    /* 关键调整：移除外部 margin/动画，由 Modal 控制 */
+    margin: 0; 
+    flex-shrink: 0;
+    opacity: 1;
+    animation: none;
+    will-change: transform, opacity;
+    position: relative;
+    z-index: 101; /* 确保高于背景 */
+
+    /* 弹出动画初始状态 */
+    transform: translateY(-50px); 
+    transition: transform 0.3s ease;
+}
+
+/* 模态框弹出时的动画终点 */
+#modal-overlay.visible .container {
+    transform: translateY(0);
+}
+
+
+/* ===== 模态覆盖层：全屏、居中、半透明背景 ===== */
 #modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* 半透明黑色背景 */
+    background: rgba(0, 0, 0, 0.4); 
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100; /* 确保它在最上层 */
-    
-    /* 默认隐藏状态 */
+    z-index: 100; 
     visibility: hidden; 
     opacity: 0;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* 模态显示时的状态 */
 #modal-overlay.visible {
     visibility: visible;
     opacity: 1;
 }
 
-/* 3. 调整 .container 样式：控制弹出动画 */
-.container {
-    margin: 0; /* 移除外部 margin */
-    animation: none; /* 禁用初始动画 */
-    will-change: transform;
-    
-    /* 初始时将 container 稍微向上移动 */
-    transform: translateY(-50px);
-    transition: transform 0.3s ease; 
-    
-    position: relative; 
-    z-index: 101; 
-}
-
-/* 模态对话框弹出时的动画效果 */
-#modal-overlay.visible .container {
-    transform: translateY(0);
-}
-
-/* 4. 关闭按钮样式 - 位于模态框的右上角 */
+/* 关闭按钮样式 */
 .close-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    
-    /* 继承液态玻璃按钮的透明样式 */
-    background: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(8px);
-    border-radius: 50%; 
+    top: 10px; 
+    right: 10px; 
+    background: rgba(255, 255, 255, 0.15); 
+    backdrop-filter: blur(5px);
+    border-radius: 50%;
     width: 35px;
     height: 35px;
-    padding: 0;
     line-height: 35px;
     text-align: center;
     font-size: 24px;
     font-weight: normal;
-    color: #333;
-    cursor: pointer;
+    color: #333; 
     border: none;
+    padding: 0;
+    cursor: pointer;
     z-index: 102; 
     transition: background 0.2s, transform 0.2s;
     margin-top: 0 !important; 
@@ -81,7 +113,51 @@ body {
     transform: scale(1.1);
 }
 
-/* 5. 快捷入口按钮布局 */
+/* ===== 表单区域 & 输入组件 (保持不变) ===== */
+.form-section {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.input-group {
+    width: 100%;
+    position: relative;
+}
+
+/* ... 保持所有输入框和自定义下拉菜单的样式 ... */
+
+/* ===== 按钮（液态玻璃）: 适用于立即解析按钮 ===== */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    will-change: transform, opacity;
+}
+
+button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* ===== 快捷入口按钮布局和样式 ===== */
 .shortcut-links {
     display: flex;
     justify-content: space-between;
@@ -90,9 +166,7 @@ body {
     margin-top: 15px; 
 }
 
-/* 6. 快捷入口按钮的透明样式 */
 .quick-link-btn {
-    /* 复制 button 的主要样式 */
     width: 50%; 
     padding: 12px;
     font-size: 18px;
@@ -101,8 +175,7 @@ body {
     justify-content: center;
     text-decoration: none; 
     box-sizing: border-box;
-    
-    /* 复制 button 的液态玻璃和动画样式 */
+    /* 继承 button 的透明和动画样式 */
     border-radius: 12px;
     border: none;
     color: #333;
@@ -124,3 +197,43 @@ body {
 .quick-link-btn:active {
     transform: scale(0.97);
 }
+
+/* ===== 底部样式 & 图标：恢复 Logo 尺寸 ===== */
+footer {
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    z-index: 50; 
+    will-change: transform;
+    margin-bottom: 20px; 
+}
+
+.blend-logo {
+    mix-blend-mode: lighten;
+    padding: 1px;
+    transform: translate(-1px, -1px);
+}
+
+.blend-logo img {
+    /* 关键修复：确保尺寸被应用 */
+    display: inline-block;
+    border-radius: 7px;
+    width: 88px !important; /* 强制应用您的 Logo 宽度 */
+    height: auto;
+    transition: all .2s ease-in;
+    box-shadow: 2px 1px 8px 0px #1bb4fe;
+    position: relative;
+    z-index: 20; 
+}
+
+.blend-logo img:hover {
+    transform: translateY(-5px);
+    box-shadow: 2px 1px 8px 0px #6F8FAF;
+}
+
+.blend-logo img:active {
+    transform: translateY(13px);
+    transition: all 0.1s ease-in
+}
+
+/* ... 保持其他样式（如错误信息、响应式、动画等）不变 ... */
